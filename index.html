@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel de Control - Calendario Escolar 2026 | CEIA Juanita Zúñiga Fuentes</title>
+    <meta name="description"
+        content="Panel de control y monitoreo del calendario académico 2026 del CEIA Juanita Zúñiga Fuentes.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <div class="logo-section">
+                <div class="logo-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                        <line x1="16" y1="2" x2="16" y2="6"></line>
+                        <line x1="8" y1="2" x2="8" y2="6"></line>
+                        <line x1="3" y1="10" x2="21" y2="10"></line>
+                    </svg>
+                </div>
+                <div class="logo-text">
+                    <h1>CEIA Juanita Zúñiga Fuentes</h1>
+                    <p>Panel de Control - Calendario 2026</p>
+                </div>
+            </div>
+            <div class="header-actions">
+                <div class="search-box">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <path d="m21 21-4.35-4.35"></path>
+                    </svg>
+                    <input type="text" id="searchInput" placeholder="Buscar actividad...">
+                </div>
+                <button class="btn-export" id="exportBtn">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                        <polyline points="7,10 12,15 17,10"></polyline>
+                        <line x1="12" y1="15" x2="12" y2="3"></line>
+                    </svg>
+                    Exportar
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-container">
+        <!-- Stats Cards -->
+        <section class="stats-section">
+            <div class="stat-card stat-total">
+                <div class="stat-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                        <line x1="16" y1="2" x2="16" y2="6"></line>
+                        <line x1="8" y1="2" x2="8" y2="6"></line>
+                        <line x1="3" y1="10" x2="21" y2="10"></line>
+                    </svg>
+                </div>
+                <div class="stat-info">
+                    <span class="stat-number" id="totalEvents">0</span>
+                    <span class="stat-label">Total Actividades</span>
+                </div>
+            </div>
+            <div class="stat-card stat-pending">
+                <div class="stat-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <polyline points="12,6 12,12 16,14"></polyline>
+                    </svg>
+                </div>
+                <div class="stat-info">
+                    <span class="stat-number" id="pendingEvents">0</span>
+                    <span class="stat-label">Pendientes</span>
+                </div>
+            </div>
+            <div class="stat-card stat-progress">
+                <div class="stat-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 2v4"></path>
+                        <path d="M12 18v4"></path>
+                        <path d="m4.93 4.93 2.83 2.83"></path>
+                        <path d="m16.24 16.24 2.83 2.83"></path>
+                        <path d="M2 12h4"></path>
+                        <path d="M18 12h4"></path>
+                    </svg>
+                </div>
+                <div class="stat-info">
+                    <span class="stat-number" id="inProgressEvents">0</span>
+                    <span class="stat-label">En Progreso</span>
+                </div>
+            </div>
+            <div class="stat-card stat-completed">
+                <div class="stat-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                        <polyline points="22,4 12,14.01 9,11.01"></polyline>
+                    </svg>
+                </div>
+                <div class="stat-info">
+                    <span class="stat-number" id="completedEvents">0</span>
+                    <span class="stat-label">Completadas</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Calendar Section -->
+        <section class="calendar-section">
+            <div class="calendar-header">
+                <h2>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                        <line x1="16" y1="2" x2="16" y2="6"></line>
+                        <line x1="8" y1="2" x2="8" y2="6"></line>
+                        <line x1="3" y1="10" x2="21" y2="10"></line>
+                    </svg>
+                    Calendario Visual
+                </h2>
+                <div class="calendar-nav">
+                    <button class="nav-btn" id="prevMonth">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="15,18 9,12 15,6"></polyline>
+                        </svg>
+                    </button>
+                    <span class="current-month" id="currentMonthLabel">Marzo 2026</span>
+                    <button class="nav-btn" id="nextMonth">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="9,6 15,12 9,18"></polyline>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            <div class="calendar-grid" id="calendarGrid">
+                <!-- Calendar will be generated here -->
+            </div>
+        </section>
+
+        <!-- Filters -->
+        <section class="filters-section">
+            <div class="filter-group">
+                <label>Filtrar por Mes:</label>
+                <div class="month-tabs" id="monthTabs">
+                    <button class="month-tab active" data-month="all">Todos</button>
+                    <button class="month-tab" data-month="marzo">Marzo</button>
+                    <button class="month-tab" data-month="abril">Abril</button>
+                    <button class="month-tab" data-month="mayo">Mayo</button>
+                    <button class="month-tab" data-month="junio">Junio</button>
+                    <button class="month-tab" data-month="julio">Julio</button>
+                </div>
+            </div>
+            <div class="filter-group">
+                <label>Filtrar por Categoría:</label>
+                <div class="category-filters" id="categoryFilters">
+                    <button class="category-btn active" data-category="all">
+                        <span class="category-dot all"></span>Todas
+                    </button>
+                    <button class="category-btn" data-category="consejo">
+                        <span class="category-dot consejo"></span>Consejos
+                    </button>
+                    <button class="category-btn" data-category="entrega">
+                        <span class="category-dot entrega"></span>Entregas UTP
+                    </button>
+                    <button class="category-btn" data-category="evaluacion">
+                        <span class="category-dot evaluacion"></span>Evaluaciones
+                    </button>
+                    <button class="category-btn" data-category="feriado">
+                        <span class="category-dot feriado"></span>Feriados
+                    </button>
+                    <button class="category-btn" data-category="celebracion">
+                        <span class="category-dot celebracion"></span>Celebraciones
+                    </button>
+                    <button class="category-btn" data-category="administrativo">
+                        <span class="category-dot administrativo"></span>Administrativo
+                    </button>
+                    <button class="category-btn" data-category="interno">
+                        <span class="category-dot interno"></span>Interno
+                    </button>
+                </div>
+            </div>
+            <div class="filter-group">
+                <label>Filtrar por Estado:</label>
+                <div class="status-filters" id="statusFilters">
+                    <button class="status-btn active" data-status="all">Todos</button>
+                    <button class="status-btn" data-status="pending">Pendientes</button>
+                    <button class="status-btn" data-status="in-progress">En Progreso</button>
+                    <button class="status-btn" data-status="completed">Completadas</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Events Grid -->
+        <section class="events-section">
+            <div class="events-header">
+                <h2>Actividades del Calendario</h2>
+                <div class="view-toggle">
+                    <button class="view-btn active" id="gridView" title="Vista de tarjetas">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="3" y="3" width="7" height="7"></rect>
+                            <rect x="14" y="3" width="7" height="7"></rect>
+                            <rect x="14" y="14" width="7" height="7"></rect>
+                            <rect x="3" y="14" width="7" height="7"></rect>
+                        </svg>
+                    </button>
+                    <button class="view-btn" id="listView" title="Vista de lista">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <line x1="8" y1="6" x2="21" y2="6"></line>
+                            <line x1="8" y1="12" x2="21" y2="12"></line>
+                            <line x1="8" y1="18" x2="21" y2="18"></line>
+                            <line x1="3" y1="6" x2="3.01" y2="6"></line>
+                            <line x1="3" y1="12" x2="3.01" y2="12"></line>
+                            <line x1="3" y1="18" x2="3.01" y2="18"></line>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            <div class="events-grid" id="eventsGrid"></div>
+            <div class="no-results" id="noResults" style="display: none;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <path d="M16 16s-1.5-2-4-2-4 2-4 2"></path>
+                    <line x1="9" y1="9" x2="9.01" y2="9"></line>
+                    <line x1="15" y1="9" x2="15.01" y2="9"></line>
+                </svg>
+                <p>No se encontraron actividades con los filtros seleccionados</p>
+            </div>
+        </section>
+    </main>
+
+    <!-- Floating Action Button -->
+    <button class="fab" id="fabAdd" title="Agregar nueva actividad">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="12" y1="5" x2="12" y2="19"></line>
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+        </svg>
+    </button>
+
+    <!-- Event Modal (View/Edit) -->
+    <div class="modal-overlay" id="eventModal">
+        <div class="modal-content modal-large">
+            <div class="modal-top-bar">
+                <div class="modal-actions-left">
+                    <span class="modal-badge" id="modalBadge">Visualizando</span>
+                </div>
+                <div class="modal-actions-right">
+                    <button class="modal-action-btn edit-btn" id="modalEditBtn" title="Editar actividad">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                            <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                        </svg>
+                    </button>
+                    <button class="modal-action-btn delete-btn" id="modalDeleteBtn" title="Eliminar actividad">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="3,6 5,6 21,6"></polyline>
+                            <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2">
+                            </path>
+                        </svg>
+                    </button>
+                    <button class="modal-close" id="modalClose">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <line x1="18" y1="6" x2="6" y2="18"></line>
+                            <line x1="6" y1="6" x2="18" y2="18"></line>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            <div class="modal-header">
+                <div class="modal-category" id="modalCategory"></div>
+                <h3 id="modalTitle"></h3>
+                <p class="modal-date" id="modalDate"></p>
+            </div>
+            <div class="modal-body">
+                <div class="modal-grid">
+                    <div class="modal-section">
+                        <h4>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                                <polyline points="14,2 14,8 20,8"></polyline>
+                                <line x1="16" y1="13" x2="8" y2="13"></line>
+                                <line x1="16" y1="17" x2="8" y2="17"></line>
+                            </svg>
+                            Descripción
+                        </h4>
+                        <p id="modalDescription"></p>
+                    </div>
+                    <div class="modal-section">
+                        <h4>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                                <circle cx="9" cy="7" r="4"></circle>
+                                <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                                <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                            </svg>
+                            Responsables
+                        </h4>
+                        <div class="tags-display" id="modalResponsables">
+                            <span class="tag empty">Sin asignar</span>
+                        </div>
+                    </div>
+                    <div class="modal-section">
+                        <h4>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path
+                                    d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z">
+                                </path>
+                            </svg>
+                            Recursos Necesarios
+                        </h4>
+                        <div class="tags-display" id="modalRecursos">
+                            <span class="tag empty">Sin recursos</span>
+                        </div>
+                    </div>
+                    <div class="modal-section">
+                        <h4>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path
+                                    d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z">
+                                </path>
+                                <line x1="12" y1="9" x2="12" y2="13"></line>
+                                <line x1="12" y1="17" x2="12.01" y2="17"></line>
+                            </svg>
+                            Prioridad
+                        </h4>
+                        <div class="priority-display" id="modalPrioridad">
+                            <span class="priority-badge normal">Normal</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-section full-width">
+                    <h4>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <polyline points="12,6 12,12 16,14"></polyline>
+                        </svg>
+                        Estado
+                    </h4>
+                    <div class="status-selector" id="statusSelector">
+                        <button class="status-option" data-status="pending">
+                            <span class="status-icon pending"></span>Pendiente
+                        </button>
+                        <button class="status-option" data-status="in-progress">
+                            <span class="status-icon in-progress"></span>En Progreso
+                        </button>
+                        <button class="status-option" data-status="completed">
+                            <span class="status-icon completed"></span>Completada
+                        </button>
+                    </div>
+                </div>
+                <div class="modal-section full-width">
+                    <h4>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                            <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                        </svg>
+                        Notas y Observaciones
+                    </h4>
+                    <textarea id="modalNotes" placeholder="Agregar notas sobre esta actividad..."></textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-secondary" id="modalCancel">Cancelar</button>
+                <button class="btn-primary" id="modalSave">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path>
+                        <polyline points="17,21 17,13 7,13 7,21"></polyline>
+                        <polyline points="7,3 7,8 15,8"></polyline>
+                    </svg>
+                    Guardar Cambios
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add/Edit Event Modal -->
+    <div class="modal-overlay" id="editModal">
+        <div class="modal-content modal-large">
+            <button class="modal-close" id="editModalClose">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+            </button>
+            <div class="modal-header">
+                <div class="modal-category interno" id="editModalCategoryDisplay">Nueva Actividad</div>
+                <h3 id="editModalTitle">Agregar Nueva Actividad</h3>
+            </div>
+            <div class="modal-body">
+                <form id="eventForm" class="event-form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="formTitle">Título de la Actividad *</label>
+                            <input type="text" id="formTitle" required placeholder="Ej: Reunión de apoderados">
+                        </div>
+                    </div>
+                    <div class="form-row two-col">
+                        <div class="form-group">
+                            <label for="formDay">Día(s) *</label>
+                            <input type="text" id="formDay" required placeholder="Ej: 15 o 15-20">
+                        </div>
+                        <div class="form-group">
+                            <label for="formMonth">Mes *</label>
+                            <select id="formMonth" required>
+                                <option value="marzo">Marzo</option>
+                                <option value="abril">Abril</option>
+                                <option value="mayo">Mayo</option>
+                                <option value="junio">Junio</option>
+                                <option value="julio">Julio</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-row two-col">
+                        <div class="form-group">
+                            <label for="formCategory">Categoría *</label>
+                            <select id="formCategory" required>
+                                <option value="interno">Interno</option>
+                                <option value="consejo">Consejo</option>
+                                <option value="entrega">Entrega UTP</option>
+                                <option value="evaluacion">Evaluación</option>
+                                <option value="feriado">Feriado</option>
+                                <option value="celebracion">Celebración</option>
+                                <option value="administrativo">Administrativo</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="formPriority">Prioridad</label>
+                            <select id="formPriority">
+                                <option value="baja">Baja</option>
+                                <option value="normal" selected>Normal</option>
+                                <option value="alta">Alta</option>
+                                <option value="urgente">Urgente</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="formDescription">Descripción</label>
+                        <textarea id="formDescription" rows="3" placeholder="Describe la actividad..."></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="formResponsables">Responsables</label>
+                        <input type="text" id="formResponsables"
+                            placeholder="Separar con comas: Juan Pérez, María González">
+                        <small>Ingresa los nombres separados por comas</small>
+                    </div>
+                    <div class="form-group">
+                        <label for="formRecursos">Recursos Necesarios</label>
+                        <input type="text" id="formRecursos"
+                            placeholder="Separar con comas: Proyector, Sala de reuniones">
+                        <small>Ingresa los recursos separados por comas</small>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-secondary" id="editModalCancel">Cancelar</button>
+                <button class="btn-primary" id="editModalSave">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path>
+                        <polyline points="17,21 17,13 7,13 7,21"></polyline>
+                        <polyline points="7,3 7,8 15,8"></polyline>
+                    </svg>
+                    Guardar Actividad
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Delete Confirmation Modal -->
+    <div class="modal-overlay" id="deleteModal">
+        <div class="modal-content modal-small">
+            <div class="delete-modal-content">
+                <div class="delete-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <line x1="15" y1="9" x2="9" y2="15"></line>
+                        <line x1="9" y1="9" x2="15" y2="15"></line>
+                    </svg>
+                </div>
+                <h3>¿Eliminar actividad?</h3>
+                <p>Esta acción no se puede deshacer. La actividad será eliminada permanentemente.</p>
+                <div class="delete-modal-actions">
+                    <button class="btn-secondary" id="deleteModalCancel">Cancelar</button>
+                    <button class="btn-danger" id="deleteModalConfirm">Eliminar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-info">
+                <p><strong>CEIA Juanita Zúñiga Fuentes</strong></p>
+                <p>Igualdad N° 584 | ceia.juanitazuniga@daemparral.cl</p>
+                <p>Calendario sujeto a modificación</p>
+            </div>
+            <div class="footer-signature">
+                <p>Director: Juan José Araya Chandía - Director ADP</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="data.js"></script>
+    <script src="app.js"></script>
+</body>
+
+</html>
